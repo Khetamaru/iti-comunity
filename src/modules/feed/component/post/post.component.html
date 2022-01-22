@@ -1,0 +1,27 @@
+<div class="post">
+
+  <div class="post-author-name">{{post.createdBy.username}}</div>
+
+  <div class="post-author-photo" [ngStyle]="{'background-image': 'url(' +  (post.createdBy.photoUrl !== undefined ? post.createdBy.photoUrl : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg') + ')'}"></div>
+
+  <div class="post-date">{{toDate(post.createdAt) | date: 'dd/MM/yy hh:mm'}}</div>
+
+  <div class="post-user-like">
+    <div class="post-user-like-number" *ngIf="post.liked">{{post.likes}}</div>
+    <i nz-icon nzType="heart" [nzTheme]="post.liked ? 'fill' : 'outline'" [ngClass]="{liked: post.liked}" (click)="like()"></i>
+  </div>
+
+  <p class="post-text">{{post.message.text.content}}</p>
+
+  <div class="post-attachements" *ngFor="let element of post.message.attachements">
+
+    <app-post-attachement-youtube *ngIf="isYoutube(element)" [element]="element"></app-post-attachement-youtube>
+
+    <app-post-attachement-image *ngIf="isImage(element)" [element]="element"></app-post-attachement-image>
+
+    <app-post-attachement-video *ngIf="isVideo(element)" [element]="element"></app-post-attachement-video>
+    
+    <app-post-attachement-audio *ngIf="isAudio(element)" [element]="element"></app-post-attachement-audio>
+  </div>
+  <div #anchor></div>
+</div>
